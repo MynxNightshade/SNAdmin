@@ -45,18 +45,24 @@ public class WarnCmd implements CommandExecutor {
 		}
 		String victimMessage = this.CONFIG.getString("messages.warn.victim", "You were warn by %admin% - Reason: %reason%").replaceAll("%admin%", sender.getName()).replaceAll("%reason%", reason);
 		victimMessage = ChatUtils.colorize(victimMessage);
+		String senderMessage = this.CONFIG.getString("messages.warn.sender", "You warned %victim% - Reason: %reason%").replaceAll("%victim%", victim.getName()).replaceAll("%reason%", reason);
+		senderMessage = ChatUtils.colorize(senderMessage);
+		sender.sendMessage(senderMessage);
 		SNAdminAPI.sendMessage(victim.getName(), victimMessage);
 		//Warn player
 		SNAdminAPI.warn(victim.getName());
 		
 		//Check total warnings
-		if (this.CONFIG.getBoolean("warnings.enableAutoBan")) {
+		if (this.CONFIG.getBoolean("warnings.enableAutoBan", false)) {
 			int warns = SNAdminAPI.getWarnInfo(victim.getName()).getTotalWarns();
-			reason = this.CONFIG.getString("warnings.reason");
+			reason = this.CONFIG.getString("warnings.reason", "Max Warnings");
 			
-			if (warns >= this.CONFIG.getInt("warnings.maxWarns")) {
+			if (warns >= this.CONFIG.getInt("warnings.maxWarns", 3)) {
 				String banType = this.CONFIG.getString("warnings.banType");
-				SNAdminAPI.kick(victim.getName(), reason);
+				long time = TimeUtils.createFutureTime(this.CONFIG.getInt("warnings.time.length", 1), this.CONFIG.getString("warnings.time.type", "day"));
+				String banMessage = this.CONFIG.getString("warnings.banMessage", "You are banned! - Reason: %reason%").replaceAll("%reason%", reason).replaceAll("%time%", TimeUtils.millisToString(time - System.currentTimeMillis())).replaceAll("%admin%", "Server");
+				banMessage = ChatUtils.colorize(banMessage);
+				SNAdminAPI.kick(victim.getName(), banMessage);
 				
 				if (banType.equalsIgnoreCase("ban")) {
 					String globalMessage = this.CONFIG.getString("messages.ban.global", "%victim% was banned by %admin% - Reason: %reason%").replaceAll("%victim%", victim.getName()).replaceAll("%admin%", "Server").replaceAll("%reason%", reason);
@@ -65,14 +71,13 @@ public class WarnCmd implements CommandExecutor {
 					SNAdminAPI.ban(victim.getName(), reason);	
 					return true;
 				} else if (banType.equalsIgnoreCase("tempban")) {
-					long time = TimeUtils.createFutureTime(this.CONFIG.getInt("warnings.time.amount"), this.CONFIG.getString("warnings.time.interval"));
-					String globalMessage = this.CONFIG.getString("messages.tempBan.global", "%victim% was banned for %time% by %admin% - Reason: %reason%").replaceAll("%victim%", victim.getName()).replaceAll("%admin%", "Server").replaceAll("%time%", TimeUtils.millisToString(time - System.currentTimeMillis())).replaceAll("%admin%", sender.getName()).replaceAll("%reason%", reason);
+					String globalMessage = this.CONFIG.getString("messages.tempban.global", "%victim% was banned for %time% by %admin% - Reason: %reason%").replaceAll("%victim%", victim.getName()).replaceAll("%admin%", "Server").replaceAll("%time%", TimeUtils.millisToString(time - System.currentTimeMillis())).replaceAll("%admin%", sender.getName()).replaceAll("%reason%", reason);
 					globalMessage = ChatUtils.colorize(globalMessage);
 					this.PLUGIN.getServer().broadcastMessage(globalMessage);
 					SNAdminAPI.ban(victim.getName(), reason, time);	
 					return true;
 				} else if (banType.equalsIgnoreCase("ipban")) {
-					String globalMessage = this.CONFIG.getString("messages.ipBan.global", "%victim% was IP banned by %admin% - Reason: %reason%").replaceAll("%victim%", victim.getName()).replaceAll("%admin%", "Server").replaceAll("%reason%", reason);
+					String globalMessage = this.CONFIG.getString("messages.ipban.global", "%victim% was IP banned by %admin% - Reason: %reason%").replaceAll("%victim%", victim.getName()).replaceAll("%admin%", "Server").replaceAll("%reason%", reason);
 					globalMessage = ChatUtils.colorize(globalMessage);
 					this.PLUGIN.getServer().broadcastMessage(globalMessage);
 					SNAdminAPI.ipBan(victim.getName(), victim.getIP(), reason);	
