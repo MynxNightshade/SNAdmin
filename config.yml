@@ -1,0 +1,67 @@
+#############################
+#   SNAdmin Configuration   #
+#############################
+
+#Set which SQL Database type to use
+#SQLite (default), MySQL
+database: 'SQLite'
+
+#Setings for MySQL Databases
+mysql:
+  database: 'jdbc:mysql://localhost:3306/minecraft'
+  user: 'root'
+  password: 'root'
+  table: 'banlist'
+  ipTable: 'banlistip'
+  
+#Warn Settings
+warnings:
+  enableAutoBan: true
+  #tempban (default), ban, ipban
+  banType: 'tempban'
+  maxWarns: 3
+  reason: 'Max Warnings'
+  banMessage: '&cYou are banned for %time% &f- Reason: &7%reason%'
+  #Only used with tempban
+  time:
+    length: 1
+    #sec,min,hour,day,month,year
+    type: 'day'
+
+#Message Configurations
+#All colors chould begin with a '&' symbol, followed by the color code.
+#For more info on color codes, and a list of colors, visist: http://goo.gl/DDVTvp
+messages:
+  ban:
+    global: '&e%victim% &cwas banned by &e%admin% &f- Reason: &7%reason%'
+    victim: '&cYou were banned by &e%admin% &f- Reason: &7%reason%'
+    deny: '&cYou are banned! &f- Reason: &7%reason%'
+  tempban:
+    global: '&e%victim% &cwas banned for &f%time% &cby &e%admin% &f- Reason: &7%reason%'
+    victim: '&cYou were banned for &f%time% &cby &e%admin% &f- Reason: &7%reason%'
+    deny: '&cYou are banned for &f%time%&c! &f- Reason: &7%reason%'
+  ipban:
+    global: '&e%victim% &cwas IP banned by &e%admin% &f- Reason: &7%reason%'
+    victim: '&cYou were IP banned by &e%admin% &f- Reason: &7%reason%'
+    deny: '&cYour IP &f(%ip%) &cis banned! &f- Reason: &7%reason%'
+  unban:
+    global: '&e%victim% &awas unbanned by &e%admin%&a!'
+  mute:
+    global: '&e%victim% &cwas muted by &e%admin% &f- Reason: &7%reason%'
+    victim: '&cYou were muted by &e%admin% &f- Reason: &7%reason%'
+    deny: '&cYou are muted!'
+  tempmute:
+    global: '&e%victim% &cwas muted for &f%time% &cby &e%admin% &f- Reason: &7%reason%'
+    victim: '&cYou were muted for &f%time% &cby &e%admin% &f- Reason: &7%reason%'
+    deny: '&cYou are muted for &f%time%&c!'
+  unmute:
+    global: '&e%victim% &awas unmuted by &e%admin%&a!'
+    victim: '&aYou were unmuted by &e%admin%&a!'
+  warn:
+    sender: '&cYou sent a warning to &e%victim%&c!'
+    victim: '&cYou received a warning from &e%admin% &f- Reason: &7%reason%'
+    clear: '&aYour warnings have been cleared by &e%admin%&a!'
+    clearAll: '&aAll warnings have been cleared by &e%admin%&a!'
+  kick:
+    global: '&e%victim% &cwas kicked by &e%admin% &f- Reason: &7%reason%'
+    victim: '&cYou were kicked by &e%admin% &f- Reason: &7%reason%'

@@ -65,6 +65,34 @@ permissions:
       skaianet.admin.override.mute: true
       skaianet.admin.version: true
       skaianet.admin.reload: true
+  skaianet.admin.ban.*:
+    description: Allows the player to use all ban-related commands.
+    default: op
+    children:
+      skaianet.admin.ban: true
+      skaianet.admin.ban.temp: true
+      skaianet.admin.ban.ip: true
+      skaianet.admin.unban: true
+      skaianet.admin.unban.ip: true
+  skaianet.admin.kick.*:
+    description: Allows the player to use all kick-related commands.
+    default: op
+    children:
+      skaianet.admin.kick: true
+      skaianet.admin.kick.all: true
+  skaianet.admin.mute.*:
+    description: Allows the player to use all mute-related commands.
+    default: op
+    children:
+      skaianet.admin.mute: true
+      skaianet.admin.unmute: true
+  skaianet.admin.warn.*:
+    description: Allows the player to use all warn-related commands.
+    default: op
+    children:
+      skaianet.admin.warn: true
+      skaianet.admin.warn.clear: true
+      skaianet.admin.warn.clear.all: true
   skaianet.admin.warn.check.*:
     default: op
     description: Allows the user to check all warns, bans, etc.
@@ -120,7 +148,6 @@ permissions:
     default: op
     description: Allows the user to clear all warnings for all players
     children:
-      skaianet.admin.warn: true
       skaianet.admin.warn.clear: true
   skaianet.admin.check.ban:
     default: op
