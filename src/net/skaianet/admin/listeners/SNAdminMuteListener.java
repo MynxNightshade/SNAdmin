@@ -27,17 +27,19 @@ public class SNAdminMuteListener implements Listener {
 		Player player = e.getPlayer();
 		MuteInfo mute = SNAdminAPI.getMuteInfo(player.getName());
 		if (mute == null) { return; }
-		
-		switch (mute.getType()) {
-		case 1:
-			//Check if user can override mutes
+
+		//Check if user can override mutes
+		if (mute.getType() > 0) {
 			if (player.hasPermission("skaianet.admin.override.mute")) {
 				//Allow message
 				this.PLUGIN.getLogger().info("Player " + e.getPlayer().getName() + " has Mute override permission... Allowing login.");
 				e.setCancelled(false);
 				return;
 			}
-			
+		}
+		
+		switch (mute.getType()) {
+		case 1:
 			//Check Temp Mute Time
 			if (mute.getEndTime() - System.currentTimeMillis() <= 0) {
 				//Unmute the player
@@ -45,23 +47,16 @@ public class SNAdminMuteListener implements Listener {
 				e.setCancelled(false);
 				return;
 			}
+			
 			String endTime = TimeUtils.millisToString(mute.getEndTime() - System.currentTimeMillis());
-			String tempMuteResponse = this.CONFIG.getString("messages.tempMute","You are muted for %time%").replaceAll("%time%", endTime);
+			String tempMuteResponse = this.CONFIG.getString("messages.tempmute.deny","You are muted for %time%").replaceAll("%time%", endTime);
 			tempMuteResponse = ChatUtils.colorize(tempMuteResponse);
 			player.sendMessage(tempMuteResponse);
 			this.PLUGIN.getLogger().info("Player " + player.getName() + " was denied permission to talk. Reason: MuteType.TEMP");
 			e.setCancelled(true);
 			return;
 		case 2:
-			//Check if user can override mutes
-			if (player.hasPermission("skaianet.admin.override.mute")) {
-				//Allow message
-				this.PLUGIN.getLogger().info("Player " + e.getPlayer().getName() + " has Mute override permission... Allowing login.");
-				e.setCancelled(false);
-				return;
-			}
-			
-			String muteResponse = this.CONFIG.getString("messages.mute.response", "You are muted!");
+			String muteResponse = this.CONFIG.getString("messages.mute.deny", "You are muted!");
 			muteResponse = ChatUtils.colorize(muteResponse);
 			this.PLUGIN.getLogger().info("Player " + player.getName() + " was denied permission to talk. Reason: MuteType.MUTE");
 			player.sendMessage(muteResponse);

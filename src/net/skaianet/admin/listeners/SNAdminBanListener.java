@@ -40,7 +40,7 @@ public class SNAdminBanListener implements Listener {
 			}
 
 			//Deny IP Bans
-			String ipBanResponse = this.CONFIG.getString("messages.ipban","Your IP (%ip%) is banned from this server!").replaceAll("%ip%", ip);
+			String ipBanResponse = this.CONFIG.getString("messages.ipban.deny","Your IP (%ip%) is banned from this server!").replaceAll("%ip%", ip);
 			ipBanResponse = ChatUtils.colorize(ipBanResponse);
 			this.PLUGIN.getLogger().info("Player " + player.getName() + " was denied permission to login. Reason: BanType.IP");
 			e.disallow(PlayerLoginEvent.Result.KICK_BANNED, ipBanResponse);
@@ -69,21 +69,21 @@ public class SNAdminBanListener implements Listener {
 			}
 			//Else deny login
 			String endTime = TimeUtils.millisToString(ban.getEndTime() - System.currentTimeMillis());
-			String tempBanResponse = this.CONFIG.getString("messages.tempBan.victim","You are banned for %time% - Reason: %reason%").replaceAll("%time%", endTime).replaceAll("%reason%", ban.getReason());
+			String tempBanResponse = this.CONFIG.getString("messages.tempban.deny","You are banned for %time% - Reason: %reason%").replaceAll("%time%", endTime).replaceAll("%reason%", ban.getReason());
 			tempBanResponse = ChatUtils.colorize(tempBanResponse);
 			this.PLUGIN.getLogger().info("Player " + player.getName() + " was denied permission to login. Reason: BanType.TEMP");
 			e.disallow(PlayerLoginEvent.Result.KICK_BANNED, tempBanResponse);
 			return;
 		case 2:
 			//Deny Normal Bans
-			String banResponse = this.CONFIG.getString("messages.ban.victim","You are banned from this server - Reason: %reason%").replaceAll("%reason%", ban.getReason());
+			String banResponse = this.CONFIG.getString("messages.ban.deny","You are banned from this server - Reason: %reason%").replaceAll("%reason%", ban.getReason());
 			banResponse = ChatUtils.colorize(banResponse);
 			this.PLUGIN.getLogger().info("Player " + player.getName() + " was denied permission to login. Reason: BanType.BAN");
 			e.disallow(PlayerLoginEvent.Result.KICK_BANNED, banResponse);
 			return;
 		case 3:
-			//Deny Normal Bans
-			String ipBanResponse = this.CONFIG.getString("messages.ipban.victim","Your IP banned from this server!").replaceAll("%ip%", ip);
+			//Deny IP Bans
+			String ipBanResponse = this.CONFIG.getString("messages.ipban.deny","Your IP (%ip%) is banned from this server!").replaceAll("%ip%", ip);
 			ipBanResponse = ChatUtils.colorize(ipBanResponse);
 			this.PLUGIN.getLogger().info("Player " + player.getName() + " was denied permission to login. Reason: BanType.IP");
 			e.disallow(PlayerLoginEvent.Result.KICK_BANNED, ipBanResponse);
