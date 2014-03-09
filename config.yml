@@ -59,3 +59,4 @@ messages:
   kick:
     global: '&e%victim% &cwas kicked by &e%admin% &f- Reason: &7%reason%'
     victim: '&cYou were kicked by &e%admin% &f- Reason: &7%reason%'
+    all: '&Everyone was kicked by &e%admin% &f- Reason: &7%reason%'
