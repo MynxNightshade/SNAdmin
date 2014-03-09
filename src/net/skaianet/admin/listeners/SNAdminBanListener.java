@@ -40,7 +40,7 @@ public class SNAdminBanListener implements Listener {
 			}
 
 			//Deny IP Bans
-			String ipBanResponse = this.CONFIG.getString("messages.ipban.deny","Your IP (%ip%) is banned from this server!").replaceAll("%ip%", ip);
+			String ipBanResponse = this.CONFIG.getString("messages.ipban.deny","Your IP (%ip%) is banned from this server!").replaceAll("%ip%", ip).replaceAll("%reason%", ban.getReason());
 			ipBanResponse = ChatUtils.colorize(ipBanResponse);
 			this.PLUGIN.getLogger().info("Player " + player.getName() + " was denied permission to login. Reason: BanType.IP");
 			e.disallow(PlayerLoginEvent.Result.KICK_BANNED, ipBanResponse);
@@ -83,7 +83,7 @@ public class SNAdminBanListener implements Listener {
 			return;
 		case 3:
 			//Deny IP Bans
-			String ipBanResponse = this.CONFIG.getString("messages.ipban.deny","Your IP (%ip%) is banned from this server!").replaceAll("%ip%", ip);
+			String ipBanResponse = this.CONFIG.getString("messages.ipban.deny","Your IP (%ip%) is banned from this server!").replaceAll("%ip%", ip).replaceAll("%reason%", ban.getReason());
 			ipBanResponse = ChatUtils.colorize(ipBanResponse);
 			this.PLUGIN.getLogger().info("Player " + player.getName() + " was denied permission to login. Reason: BanType.IP");
 			e.disallow(PlayerLoginEvent.Result.KICK_BANNED, ipBanResponse);
