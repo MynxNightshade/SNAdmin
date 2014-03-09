@@ -3,16 +3,8 @@
 #############################
 
 #Set which SQL Database type to use
-#SQLite (default), MySQL
+#SQLite (default)
 database: 'SQLite'
-
-#Setings for MySQL Databases
-mysql:
-  database: 'jdbc:mysql://localhost:3306/minecraft'
-  user: 'root'
-  password: 'root'
-  table: 'banlist'
-  ipTable: 'banlistip'
   
 #Warn Settings
 warnings:
@@ -21,7 +13,8 @@ warnings:
   banType: 'tempban'
   maxWarns: 3
   reason: 'Max Warnings'
-  banMessage: '&cYou are banned for %time% &f- Reason: &7%reason%'
+  #Avaliable variables: %time%,%victim%,%admin%,%reason%,%ip%
+  banMessage: '&cYou are banned for &e%time% &f- Reason: &7%reason%'
   #Only used with tempban
   time:
     length: 1
@@ -31,6 +24,7 @@ warnings:
 #Message Configurations
 #All colors chould begin with a '&' symbol, followed by the color code.
 #For more info on color codes, and a list of colors, visist: http://goo.gl/DDVTvp
+#Avaliable variables: %time%,%victim%,%admin%,%reason%,%ip% (not every message can use all variables)
 messages:
   ban:
     global: '&e%victim% &cwas banned by &e%admin% &f- Reason: &7%reason%'

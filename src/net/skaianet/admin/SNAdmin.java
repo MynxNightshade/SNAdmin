@@ -12,7 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class SNAdmin extends JavaPlugin {
 	public static final String NO_PERMISSION = "You do not have permission to use that command.";
-	public static final String DEFAULT_AMDIN = "server";
+	public static final String DEFAULT_ADMIN = "server";
 	public static final String DEFAULT_REASON = "No Reason";
 	public static Database PLAYER_LIST, BAN_LIST, MUTE_LIST, WARN_LIST, BANNED_IPS;
 	
