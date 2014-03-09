@@ -18,7 +18,9 @@ public final class SNAdmin extends JavaPlugin {
 	
 	@Override
 	public void onEnable() {
+		this.getLogger().info("Enabling SNAdmin v" + this.getDescription().getVersion());
 		long time = System.currentTimeMillis();
+		//Create files if needed
 		this.getDataFolder().mkdir();
 		this.saveDefaultConfig();
 		
@@ -34,7 +36,7 @@ public final class SNAdmin extends JavaPlugin {
 		MUTE_LIST = new SQLite(this, "mutelist.db");
 		WARN_LIST = new SQLite(this, "warnlist.db");
 		BANNED_IPS = new SQLite(this, "bannedips.db");
-		this.setupSqlConnections();
+		this.openSqlConnections();
 		this.checkSqlTables();
 		
 		this.getLogger().info("SNAdmin Loaded! (" + (System.currentTimeMillis() - time) + "ms)");
@@ -42,8 +44,8 @@ public final class SNAdmin extends JavaPlugin {
 	
 	@Override
 	public void onDisable() {
-		this.getServer().getScheduler().cancelTasks(this);
-		this.saveConfig();
+		this.getLogger().info("Disabling SNAdmin...");
+		this.closeSqlConnections();
 	}
 	
 	private void registerListeners() {
@@ -67,12 +69,20 @@ public final class SNAdmin extends JavaPlugin {
 		this.getCommand("clearwarns").setExecutor(new ClearWarnsCmd(this));
 	}
 	
-	private void setupSqlConnections() {
+	private void openSqlConnections() {
 		PLAYER_LIST.open();
 		BAN_LIST.open();
 		MUTE_LIST.open();
 		WARN_LIST.open();
 		BANNED_IPS.open();
+	}
+	
+	private void closeSqlConnections() {
+		PLAYER_LIST.close();
+		BAN_LIST.close();
+		MUTE_LIST.close();
+		WARN_LIST.close();
+		BANNED_IPS.close();
 	}
 	
 	private void checkSqlTables() {
