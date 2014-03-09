@@ -26,7 +26,6 @@ public class SNAdminCmd implements CommandExecutor {
 				return true;
 			}
 			this.PLUGIN.reloadConfig();
-			this.PLUGIN.saveConfig();
 			sender.sendMessage(ChatColor.GREEN + "SNAdmin reloaded!");
 			return true;
 		}
