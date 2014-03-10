@@ -18,7 +18,6 @@ public final class SNAdmin extends JavaPlugin {
 	
 	@Override
 	public void onEnable() {
-		this.getLogger().info("Enabling SNAdmin v" + this.getDescription().getVersion());
 		long time = System.currentTimeMillis();
 		//Create files if needed
 		this.getDataFolder().mkdir();
@@ -44,7 +43,6 @@ public final class SNAdmin extends JavaPlugin {
 	
 	@Override
 	public void onDisable() {
-		this.getLogger().info("Disabling SNAdmin...");
 		this.closeSqlConnections();
 	}
 	
