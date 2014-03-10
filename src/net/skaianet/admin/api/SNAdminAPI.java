@@ -24,38 +24,18 @@ public final class SNAdminAPI {
 		return true;
 	}
 
-	public static final boolean ban(String player, String reason) {
+	public static final boolean ban(String player, String ip, String reason, long endTime, int type) {
 		player = player.toLowerCase();
+		if (type == BanType.IP) { SNAdminAPI.ipBan(ip, reason); }
 		if (SNAdmin.BAN_LIST.contains("ban_list", "playername", player)) {
-			SNAdmin.BAN_LIST.query("UPDATE ban_list SET reason='" + reason + "', start='" + System.currentTimeMillis() + "', end='" + -1L + "' WHERE playername='" + player + "';");
+			SNAdmin.BAN_LIST.query("UPDATE ban_list SET reason='" + reason + "', start='" + System.currentTimeMillis() + "', end='" + endTime + "', type='" + type + "' WHERE playername='" + player + "';");
 			return true;
 		}
-		SNAdmin.BAN_LIST.query("INSERT INTO ban_list(playername, reason, start, end, type) VALUES('" + player + "','" + reason + "','" + System.currentTimeMillis() + "','" + -1L + "','" + BanType.BAN + "');");
+		SNAdmin.BAN_LIST.query("INSERT INTO ban_list(playername, ip, reason, start, end, type) VALUES('" + player + "','" + ip + "','" + reason + "','" + System.currentTimeMillis() + "','" + endTime + "','" + type + "');");
 		return true;
 	}
 	
-	public static final boolean ban(String player, String reason, long endTime) {
-		player = player.toLowerCase();
-		if (SNAdmin.BAN_LIST.contains("ban_list", "playername", player)) {
-			SNAdmin.BAN_LIST.query("UPDATE ban_list SET reason='" + reason + "', start='" + System.currentTimeMillis() + "', end='" + endTime + "' WHERE playername='" + player + "';");
-			return true;
-		}
-		SNAdmin.BAN_LIST.query("INSERT INTO ban_list(playername, reason, start, end, type) VALUES('" + player + "','" + reason + "','" + System.currentTimeMillis() + "','" + endTime + "','" + BanType.TEMP + "');");
-		return true;
-	}
-	
-	public static boolean ipBan(String player, String ip, String reason) {
-		player = player.toLowerCase();
-		SNAdminAPI.banIp(ip, reason);
-		if (SNAdmin.BAN_LIST.contains("ban_list", "playername", player)) {
-			SNAdmin.BAN_LIST.query("UPDATE ban_list SET reason='" + reason + "', start='" + System.currentTimeMillis() + "', end='" + -1L + "' WHERE playername='" + player + "';");
-			return true;
-		}
-		SNAdmin.BAN_LIST.query("INSERT INTO ban_list(playername, reason, start, end, type) VALUES('" + player + "','" + reason + "','" + System.currentTimeMillis() + "','" + -1L + "','" + BanType.IP + "');");
-		return true;
-	}
-	
-	public static boolean banIp(String ip, String reason) {
+	public static boolean ipBan(String ip, String reason) {
 		if (!SNAdmin.BANNED_IPS.contains("banned_ips", "ip", ip)) {
 			SNAdmin.BANNED_IPS.query("INSERT INTO banned_ips(ip, reason) VALUES('" + ip + "','" + reason +"');");
 			return true;

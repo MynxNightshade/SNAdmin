@@ -50,9 +50,7 @@ public class UnBanCmd implements CommandExecutor {
 		this.PLUGIN.getServer().broadcastMessage(globalMessage);
 		//Unban the player
 		SNAdminAPI.unban(ban.getName());
-		if (ban.getType() == BanType.IP) {
-			SNAdminAPI.unbanIp(ban.getIP());
-		}
+		SNAdminAPI.unbanIp(ban.getIP());
 		return true;
 	}
 }

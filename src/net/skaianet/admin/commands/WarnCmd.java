@@ -9,6 +9,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import net.skaianet.admin.SNAdmin;
 import net.skaianet.admin.api.PlayerInfo;
 import net.skaianet.admin.api.SNAdminAPI;
+import net.skaianet.admin.types.BanType;
 import net.skaianet.utils.ChatUtils;
 import net.skaianet.utils.StringUtils;
 import net.skaianet.utils.TimeUtils;
@@ -68,19 +69,19 @@ public class WarnCmd implements CommandExecutor {
 					String globalMessage = this.CONFIG.getString("messages.ban.global", "%victim% was banned by %admin% - Reason: %reason%").replaceAll("%victim%", victim.getName()).replaceAll("%admin%", "Server").replaceAll("%reason%", reason);
 					globalMessage = ChatUtils.colorize(globalMessage);
 					this.PLUGIN.getServer().broadcastMessage(globalMessage);
-					SNAdminAPI.ban(victim.getName(), reason);	
+					SNAdminAPI.ban(victim.getName(), victim.getIP(), reason, -1L, BanType.BAN);
 					return true;
 				} else if (banType.equalsIgnoreCase("tempban")) {
 					String globalMessage = this.CONFIG.getString("messages.tempban.global", "%victim% was banned for %time% by %admin% - Reason: %reason%").replaceAll("%victim%", victim.getName()).replaceAll("%admin%", "Server").replaceAll("%time%", TimeUtils.millisToString(time - System.currentTimeMillis())).replaceAll("%admin%", sender.getName()).replaceAll("%reason%", reason);
 					globalMessage = ChatUtils.colorize(globalMessage);
 					this.PLUGIN.getServer().broadcastMessage(globalMessage);
-					SNAdminAPI.ban(victim.getName(), reason, time);	
+					SNAdminAPI.ban(victim.getName(), victim.getIP(), reason, time, BanType.TEMP);
 					return true;
 				} else if (banType.equalsIgnoreCase("ipban")) {
 					String globalMessage = this.CONFIG.getString("messages.ipban.global", "%victim% was IP banned by %admin% - Reason: %reason%").replaceAll("%victim%", victim.getName()).replaceAll("%admin%", "Server").replaceAll("%reason%", reason);
 					globalMessage = ChatUtils.colorize(globalMessage);
 					this.PLUGIN.getServer().broadcastMessage(globalMessage);
-					SNAdminAPI.ipBan(victim.getName(), victim.getIP(), reason);	
+					SNAdminAPI.ban(victim.getName(), victim.getIP(), reason, -1L, BanType.IP);
 					return true;
 				} else {
 					sender.sendMessage(ChatColor.RED + "ERROR: AutoBanning is not setup correctly. Please consult your server administrator to resolve this.");

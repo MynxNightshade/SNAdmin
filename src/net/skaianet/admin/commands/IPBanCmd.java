@@ -5,9 +5,11 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
+
 import net.skaianet.admin.SNAdmin;
 import net.skaianet.admin.api.PlayerInfo;
 import net.skaianet.admin.api.SNAdminAPI;
+import net.skaianet.admin.types.BanType;
 import net.skaianet.utils.ChatUtils;
 import net.skaianet.utils.StringUtils;
 
@@ -48,7 +50,7 @@ public class IPBanCmd implements CommandExecutor {
 		this.PLUGIN.getServer().broadcastMessage(globalMessage);
 		//Kick, then ban the player
 		SNAdminAPI.kick(victim.getName(), victimMessage);
-		SNAdminAPI.ipBan(victim.getName(), victim.getIP(), reason);
+		SNAdminAPI.ban(victim.getName(), victim.getIP(), reason, -1L, BanType.IP);
 		return true;
 	}
 }
