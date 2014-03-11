@@ -9,6 +9,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import net.skaianet.admin.SNAdmin;
 import net.skaianet.admin.api.PlayerInfo;
 import net.skaianet.admin.api.SNAdminAPI;
+import net.skaianet.admin.types.MuteType;
 import net.skaianet.utils.ChatUtils;
 import net.skaianet.utils.StringUtils;
 import net.skaianet.utils.TimeUtils;
@@ -60,7 +61,7 @@ public class TempMuteCmd implements CommandExecutor {
 		victimMessage = ChatUtils.colorize(victimMessage);
 		this.PLUGIN.getServer().broadcastMessage(globalMessage);
 		//Kick, then ban the player
-		SNAdminAPI.mute(victim.getName(), reason, time);
+		SNAdminAPI.mute(victim.getName(), reason, time, MuteType.TEMP);
 		return true;
 	}
 }

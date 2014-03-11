@@ -5,9 +5,11 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
+
 import net.skaianet.admin.SNAdmin;
 import net.skaianet.admin.api.PlayerInfo;
 import net.skaianet.admin.api.SNAdminAPI;
+import net.skaianet.admin.types.MuteType;
 import net.skaianet.utils.ChatUtils;
 import net.skaianet.utils.StringUtils;
 
@@ -48,7 +50,7 @@ public class MuteCmd implements CommandExecutor {
 		this.PLUGIN.getServer().broadcastMessage(globalMessage);
 		SNAdminAPI.sendMessage(victim.getName(), victimMessage);
 		//Mute the player
-		SNAdminAPI.mute(victim.getName(), reason);
+		SNAdminAPI.mute(victim.getName(), reason, -1L, MuteType.MUTE);
 		return true;
 	}
 }

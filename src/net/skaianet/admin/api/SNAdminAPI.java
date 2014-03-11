@@ -7,8 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import net.skaianet.admin.SNAdmin;
-import net.skaianet.admin.types.BanType;
-import net.skaianet.admin.types.MuteType;
+import net.skaianet.admin.types.*;
 
 public final class SNAdminAPI {
 	
@@ -28,7 +27,7 @@ public final class SNAdminAPI {
 		player = player.toLowerCase();
 		if (type == BanType.IP) { SNAdminAPI.ipBan(ip, reason); }
 		if (SNAdmin.BAN_LIST.contains("ban_list", "playername", player)) {
-			SNAdmin.BAN_LIST.query("UPDATE ban_list SET reason='" + reason + "', start='" + System.currentTimeMillis() + "', end='" + endTime + "', type='" + type + "' WHERE playername='" + player + "';");
+			SNAdmin.BAN_LIST.query("UPDATE ban_list SET ip='" + ip  + "', reason='" + reason + "', start='" + System.currentTimeMillis() + "', end='" + endTime + "', type='" + type + "' WHERE playername='" + player + "';");
 			return true;
 		}
 		SNAdmin.BAN_LIST.query("INSERT INTO ban_list(playername, ip, reason, start, end, type) VALUES('" + player + "','" + ip + "','" + reason + "','" + System.currentTimeMillis() + "','" + endTime + "','" + type + "');");
@@ -60,23 +59,13 @@ public final class SNAdminAPI {
 		return false;
 	}
 	
-	public static final boolean mute(String player, String reason) {
+	public static final boolean mute(String player, String reason, long endTime, int type) {
 		player = player.toLowerCase();
 		if (SNAdmin.MUTE_LIST.contains("mute_list", "playername", player)) {
-			SNAdmin.MUTE_LIST.query("UPDATE mute_list SET reason='" + reason + "', start='" + System.currentTimeMillis() + "', end='" + -1L + "' WHERE playername='" + player + "';");
+			SNAdmin.MUTE_LIST.query("UPDATE mute_list SET reason='" + reason + "', start='" + System.currentTimeMillis() + "', end='" + endTime + "', type='" + type + "' WHERE playername='" + player + "';");
 			return true;
 		}
-		SNAdmin.MUTE_LIST.query("INSERT INTO mute_list(playername, reason, start, end, type) VALUES('" + player + "','" + reason + "','" + System.currentTimeMillis() + "','" + -1L + "','" + MuteType.MUTE + "');");
-		return true;
-	}
-	
-	public static final boolean mute(String player, String reason, long endTime) {
-		player = player.toLowerCase();
-		if (SNAdmin.MUTE_LIST.contains("mute_list", "playername", player)) {
-			SNAdmin.MUTE_LIST.query("UPDATE mute_list SET reason='" + reason + "', start='" + System.currentTimeMillis() + "', end='" + endTime + "' WHERE playername='" + player + "';");
-			return true;
-		}
-		SNAdmin.MUTE_LIST.query("INSERT INTO mute_list(playername, reason, start, end, type) VALUES('" + player + "','" + reason + "','" + System.currentTimeMillis() + "','" + endTime + "','" + MuteType.TEMP + "');");
+		SNAdmin.MUTE_LIST.query("INSERT INTO mute_list(playername, reason, start, end, type) VALUES('" + player + "','" + reason + "','" + System.currentTimeMillis() + "','" + endTime + "','" + type + "');");
 		return true;
 	}
 	
@@ -101,6 +90,10 @@ public final class SNAdminAPI {
 	
 	public static final boolean clearWarns(String player) {
 		player = player.toLowerCase();
+		if (player.equals("*")) {
+			SNAdminAPI.clearAllWarns();
+			return true;
+		}
 		if (SNAdmin.WARN_LIST.contains("warn_list", "playername", player)) {
 			SNAdmin.WARN_LIST.query("DELETE FROM warn_list WHERE playername='" + player + "';");
 			return true;
@@ -202,6 +195,21 @@ public final class SNAdminAPI {
 			return null;
 		} else if (player.equals("*")) {
 			return new WarnInfo("*", -1);
+		}
+		return null;
+	}
+	
+	public static final IPInfo getIPInfo(String ip) {
+		if (SNAdmin.BANNED_IPS.contains("banned_ips", "ip", ip)) {
+			try {
+				ResultSet rs = SNAdmin.BANNED_IPS.query("SELECT * FROM banned_ips WHERE ip='" + ip + "';");
+				IPInfo warns = new IPInfo(ip, rs.getString("ip"));
+				rs.close();
+				return warns;
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+			return null;
 		}
 		return null;
 	}
