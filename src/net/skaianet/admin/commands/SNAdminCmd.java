@@ -16,31 +16,28 @@ public class SNAdminCmd implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (args[0].equalsIgnoreCase("reload")) {
+		if (args.length == 0) {
+			if (!sender.hasPermission("skaianet.admin.version")) {
+				sender.sendMessage(ChatColor.RED + SNAdmin.NO_PERMISSION);
+				return true;
+			}
+			sender.sendMessage(ChatColor.GREEN + "SNAdmin v" + this.PLUGIN.getDescription().getVersion());
+			return true;
+		} else if (args[0].equalsIgnoreCase("reload")) {
 			if (!sender.hasPermission("skaianet.admin.reload")) {
 				sender.sendMessage(ChatColor.RED + SNAdmin.NO_PERMISSION);
 				return true;
 			}
 			if (args.length > 2) {
-				sender.sendMessage(ChatColor.RED + "Usage: " + cmd.getUsage() + " reload");
+				sender.sendMessage(ChatColor.RED + "Usage: " + cmd.getUsage());
 				return true;
 			}
 			this.PLUGIN.reloadConfig();
 			sender.sendMessage(ChatColor.GREEN + "SNAdmin reloaded!");
 			return true;
-		}
-		if (args[0].equalsIgnoreCase("version") || args[0].equalsIgnoreCase("ver")) {
-			if (!sender.hasPermission("skaianet.admin.version")) {
-				sender.sendMessage(ChatColor.RED + SNAdmin.NO_PERMISSION);
-				return true;
-			}
-			if (args.length > 2) {
-				sender.sendMessage(ChatColor.RED + "Usage: " + cmd.getUsage() + " version");
-				return true;
-			}
-			sender.sendMessage(ChatColor.GREEN + "SNAdmin v" + this.PLUGIN.getDescription().getVersion());
+		} else {
+			sender.sendMessage(ChatColor.RED + "Usage: " + cmd.getUsage());
 			return true;
 		}
-		return true;
 	}
 }

@@ -5,7 +5,7 @@ author: IAreKyleW00t
 website: http://skaianet.net/
 commands:
   snadmin:
-    description: Generic SNAdmin commands
+    description: Outputs the current version or reloads the config
     aliases: [sna]
     usage: /snadmin [reload]
   ban:
