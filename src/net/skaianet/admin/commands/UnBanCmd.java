@@ -34,7 +34,9 @@ public class UnBanCmd implements CommandExecutor {
 		BanInfo ban = SNAdminAPI.getBanInfo(args[0]);
 		//Check to make sure the player exists
 		if (ban == null) {
-			sender.sendMessage(ChatColor.RED + "Player does not exist or isn't banned!");
+			String notBannedMessage = this.CONFIG.getString("messages.unban.notBanned","%victim% is not banned!").replaceAll("%victim%", args[0]);
+			notBannedMessage = ChatUtils.colorize(notBannedMessage);
+			sender.sendMessage(notBannedMessage);
 			return true;
 		}
 		

@@ -40,6 +40,7 @@ messages:
     deny: '&cYour IP &f(%ip%) &cis banned! &f- Reason: &7%reason%'
   unban:
     global: '&e%victim% &awas unbanned by &e%admin%&a!'
+    notBanned: '&e%victim% &cis not banned!'
   mute:
     global: '&e%victim% &cwas muted by &e%admin% &f- Reason: &7%reason%'
     victim: '&cYou were muted by &e%admin% &f- Reason: &7%reason%'
@@ -51,6 +52,7 @@ messages:
   unmute:
     global: '&e%victim% &awas unmuted by &e%admin%&a!'
     victim: '&aYou were unmuted by &e%admin%&a!'
+    notMuted: '&e%victim% &cis not muted!'
   warn:
     sender: '&cYou sent a warning to &e%victim%&c!'
     victim: '&cYou received a warning from &e%admin% &f- Reason: &7%reason%'
@@ -60,3 +62,16 @@ messages:
     global: '&e%victim% &cwas kicked by &e%admin% &f- Reason: &7%reason%'
     victim: '&cYou were kicked by &e%admin% &f- Reason: &7%reason%'
     all: '&Everyone was kicked by &e%admin% &f- Reason: &7%reason%'
+  check:
+    ban: '&e%victim% &cwas banned &e%time% &cago &f- Reason: &7%reason%'
+    tempban: '&e%victim% &cis banned for &e%time% &f- Reason: &7%reason%'
+    ipban: '&e%victim% &c1was IP banned &e%time% &cago &f- Reason: &7%reason%'
+    notBanned: '&e%victim% &ais not banned!'
+    mute: '&e%victim% &cwas muted &e%time% &cago &f- Reason: &7%reason%'
+    tempmute: '&e%victim% &cis muted for &e%time% &f- Reason: &7%reason%'
+    notMuted: '&e%victim% &ais not muted!'
+    bannedIP: '&e%ip% &cis banned from the server!'
+    cleanIP: '&e%ip% &ais not banned from the server!'
+    warn: '&e%victim% &chas &e%warns% &cwarning'
+    warns: '&e%victim% &chas &e%warns% &cwarnings'
+    noWarns: '&e%victim% &ahas no warnings!'

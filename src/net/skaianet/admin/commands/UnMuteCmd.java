@@ -33,7 +33,9 @@ public class UnMuteCmd implements CommandExecutor {
 		MuteInfo mute = SNAdminAPI.getMuteInfo(args[0]);
 		//Check to make sure the player exists
 		if (mute == null) {
-			sender.sendMessage(ChatColor.RED + "Player does not exist or isn't muted!");
+			String notMutedMessage = this.CONFIG.getString("messages.unmute.notMuted","%victim% is not muted!").replaceAll("%victim%", args[0]);
+			notMutedMessage = ChatUtils.colorize(notMutedMessage);
+			sender.sendMessage(notMutedMessage);
 			return true;
 		}
 		
