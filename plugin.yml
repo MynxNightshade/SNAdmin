@@ -1,6 +1,6 @@
 name: SNAdmin
 main: net.skaianet.admin.SNAdmin
-version: 0.9.0
+version: 0.9.8-RC1
 author: IAreKyleW00t
 website: http://skaianet.net/
 commands:
@@ -20,6 +20,12 @@ commands:
   unban:
     description: Unban a player
     usage: /unban <player>
+  checkban:
+    description: Checks if a player is banned
+    usage: /checkban <player>
+  kick:
+    description: Kick a player
+    usage: /kick <player|*> [reason]
   mute:
     description: Mutes a player
     usage: /mute <player> [reason]
@@ -29,15 +35,21 @@ commands:
   unmute:
     description: Unmutes a player
     usage: /unmute <player>
+  checkmute:
+    description: Checks if a player is muted
+    usage: /checkmute <player>
   warn:
     description: Warns a player
     usage: /warn <player> [reason]
   clearwarns:
     description: Clears a players warnings
     usage: /clearwarns <player>
-  kick:
-    description: Kick a player
-    usage: /kick <player|*> [reason]
+  checkwarns:
+    description: Checks the number of warnings a player has
+    usage: /checkwarn <player>
+  checkip:
+    description: Checks if an IP is banned
+    usage: /checkip <ip>
 permissions:
   skaianet.admin.*:
     description: Gives the player full admin access
@@ -55,10 +67,10 @@ permissions:
       skaianet.admin.warn: true
       skaianet.admin.warn.clear: true
       skaianet.admin.warn.clear.all: true
-      skaianet.admin.check.ban: true
-      skaianet.admin.check.ip: true
-      skaianet.admin.check.mute: true
-      skaianet.admin.check.warn: true
+      skaianet.admin.check.bans: true
+      skaianet.admin.check.ips: true
+      skaianet.admin.check.mutes: true
+      skaianet.admin.check.warns: true
       skaianet.admin.override.ban: true
       skaianet.admin.override.ipban: true
       skaianet.admin.override.kick: true
@@ -97,10 +109,10 @@ permissions:
     default: op
     description: Allows the user to check all warns, bans, etc.
     children:
-      skaianet.admin.check.ban: true
-      skaianet.admin.check.ip: true
-      skaianet.admin.check.mute: true
-      skaianet.admin.check.warn: true
+      skaianet.admin.check.bans: true
+      skaianet.admin.check.ips: true
+      skaianet.admin.check.mutes: true
+      skaianet.admin.check.warns: true
   skaianet.admin.override.*:
     description: Allows the player to bypass all Bans, Kicks, etc.
     default: op
@@ -149,16 +161,16 @@ permissions:
     description: Allows the user to clear all warnings for all players
     children:
       skaianet.admin.warn.clear: true
-  skaianet.admin.check.ban:
+  skaianet.admin.check.bans:
     default: op
     description: Allows the user to check ban info for a player
-  skaianet.admin.check.ip:
+  skaianet.admin.check.ips:
     default: op
     description: Allows the user to check if an IP is banned
-  skaianet.admin.check.mute:
+  skaianet.admin.check.mutes:
     default: op
     description: Allows the user to check mute info for a player
-  skaianet.admin.check.warn:
+  skaianet.admin.check.warns:
     default: op
     description: Allows the user to check mute info for a player
   skaianet.admin.override.ban:
