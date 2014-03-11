@@ -1,7 +1,16 @@
 package net.skaianet.utils;
 
-public final class StringUtils {
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+public final class StringUtils {
+	private static final String IP_PATTERN = "^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
+
+	public static final boolean isValidIp(String ip) {
+		Matcher m = Pattern.compile(IP_PATTERN).matcher(ip);
+		return m.matches();
+	}
+	
 	public static final String combineArray(String[] str, int start, int end) {
 		String oString = "";
 		for (int i = start; i < end; i++) {
