@@ -65,6 +65,10 @@ public final class SNAdmin extends JavaPlugin {
 		this.getCommand("kick").setExecutor(new KickCmd(this));
 		this.getCommand("warn").setExecutor(new WarnCmd(this));
 		this.getCommand("clearwarns").setExecutor(new ClearWarnsCmd(this));
+		this.getCommand("checkban").setExecutor(new CheckBansCmd(this));
+		this.getCommand("checkmute").setExecutor(new CheckMutesCmd(this));
+		this.getCommand("checkip").setExecutor(new CheckIPCmd(this));
+		this.getCommand("checkwarns").setExecutor(new CheckWarnsCmd(this));
 	}
 	
 	private void openSqlConnections() {
